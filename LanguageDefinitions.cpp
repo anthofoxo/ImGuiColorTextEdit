@@ -534,16 +534,129 @@ const TextEditor::LanguageDefinition& TextEditor::LanguageDefinition::Glsl()
 	if (!inited)
 	{
 		static const char* const keywords[] = {
-			"auto", "break", "case", "char", "const", "continue", "default", "do", "double", "else", "enum", "extern", "float", "for", "goto", "if", "inline", "int", "long", "register", "restrict", "return", "short",
-			"signed", "sizeof", "static", "struct", "switch", "typedef", "union", "unsigned", "void", "volatile", "while", "_Alignas", "_Alignof", "_Atomic", "_Bool", "_Complex", "_Generic", "_Imaginary",
-			"_Noreturn", "_Static_assert", "_Thread_local"
+			// Scalars
+			"void", "bool", "int", "uint", "float", "double",
+
+			// Vectors
+			"bvec2", "bvec3", "bvec4",
+			"ivec2", "ivec3", "ivec4",
+			"uvec2", "uvec3", "uvec4",
+			"vec2", "vec3", "vec4",
+			"dvec2", "dvec3", "dvec4",
+
+			// Matrices
+			"mat2", "mat3", "mat4",
+			"mat2x2", "mat2x3", "mat2x4",
+			"mat3x2", "mat3x3", "mat3x4",
+			"mat4x2", "mat4x3", "mat4x4",
+
+			// Samplers
+			"sampler1D", "isampler1D", "usampler1D",
+			"sampler2D", "isampler2D", "usampler2D",
+			"sampler3D", "isampler3D", "usampler3D",
+			"samplerCube", "isamplerCube", "usamplerCube",
+			"sampler2DRect", "isampler2DRect", "usampler2DRect",
+			"sampler1DArray", "isampler1DArray", "usampler1DArray",
+			"sampler2DArray", "isampler2DArray", "usampler2DArray",
+			"samplerCubeArray", "isamplerCubeArray", "usamplerCubeArray",
+			"samplerBuffer", "isamplerBuffer", "usamplerBuffer",
+			"sampler2DMS", "isampler2DMS", "usampler2DMS",
+			"sampler2DMSArray", "isampler2DMSArray", "usampler2DMSArray",
+
+			// Images
+			"image1D", "iimage1D", "uimage1D",
+			"image2D", "iimage2D", "uimage2D",
+			"image3D", "iimage3D", "uimage3D",
+			"imageCube", "iimageCube", "uimageCube",
+			"image2DRect", "iimage2DRect", "uimage2DRect",
+			"image1DArray", "iimage1DArray", "uimage1DArray",
+			"image2DArray", "iimage2DArray", "uimage2DArray",
+			"imageCubeArray", "iimageCubeArray", "uimageCubeArray",
+			"imageBuffer", "iimageBuffer", "uimageBuffer",
+			"image2DMS", "iimage2DMS", "uimage2DMS",
+			"image2DMSArray", "iimage2DMSArray", "uimage2DMSArray",
+
+			// Shadow Samplers
+			"sampler1DShadow", "sampler2DShadow", "samplerCubeShadow",
+			"sampler2DRectShadow", "sampler1DArrayShadow", "sampler2DArrayShadow",
+			"samplerCubeArrayShadow",
+
+			// Control Flow
+			"if", "else", "for", "do", "while", "break", "continue", "discard", "return", "switch",
+			"case", "default"
+
+			// Qualifiers
+			"highp", "mediump", "lowp",
+			"coherent", "volatile", "restrict", "readonly", "writeonly",
+			"const", "flat", "noperspective", "smooth", "layout", "location", "binding", "std140", "std430"
+
+			// Others
+			"invariant", "uniform", "in", "out", "struct", "buffer", "precise"
 		};
+
 		for (auto& k : keywords)
 			langDef.mKeywords.insert(k);
 
 		static const char* const identifiers[] = {
-			"abort", "abs", "acos", "asin", "atan", "atexit", "atof", "atoi", "atol", "ceil", "clock", "cosh", "ctime", "div", "exit", "fabs", "floor", "fmod", "getchar", "getenv", "isalnum", "isalpha", "isdigit", "isgraph",
-			"ispunct", "isspace", "isupper", "kbhit", "log10", "log2", "log", "memcmp", "modf", "pow", "putchar", "putenv", "puts", "rand", "remove", "rename", "sinh", "sqrt", "srand", "strcat", "strcmp", "strerror", "time", "tolower", "toupper"
+			// Trigonometry
+			"acos", "acosh", "asin", "asinh", "atan", "atanh", "cos", "cosh", "degrees", "radians",
+			"sin", "sinh", "tan", "tanh",
+
+			// Mathematics
+			"abs", "ceil", "clamp", "dFdx", "dFdy", "exp", "exp2", "floor", "floor", "fma",
+			"fract", "fwidth", "inversesqrt", "isinf", "isnan", "log", "log2", "max", "min", "mix",
+			"mod", "modf", "noise", "pow", "round", "roundEven", "sign", "smoothstep", "sqrt", "step",
+			"trunc",
+
+			// Floating-Point
+			"floatBitsToInt", "frexp", "intBitsToFloat", "ldexp", "packDouble2x32",
+			"packHalf2x16", "packUnorm", "unpackDouble2x32", "unpackHalf2x16", "unpackUnorm",
+
+			// Built-In Variables
+			"gl_ClipDistance", "gl_CullDistance", "gl_FragCoord", "gl_FragDepth", "gl_FrontFacing",
+			"gl_GlobalInvocationID", "gl_HelperInvocation", "gl_InstanceID", "gl_InvocationID", "gl_Layer",
+			"gl_LocalInvocationID", "gl_LocalInvocationIndex", "gl_NumSamples", "gl_NumWorkGroups", "gl_PatchVerticesIn",
+			"gl_PointCoord", "gl_PointSize", "gl_Position", "gl_PrimitiveID", "gl_PrimitiveIDIn",
+			"gl_SampleID", "gl_SampleMask", "gl_SampleMaskIn", "gl_SamplePosition", "gl_TessCoord",
+			"gl_TessLevelInner", "gl_TessLevelOuter", "gl_VertexID", "gl_ViewportIndex", "gl_WorkGroupID",
+			"gl_WorkGroupSize",
+
+			// Vector
+			"cross", "distance", "dot", "equal", "faceforward", "length", "normalize", "notEqual", "reflect", "refract",
+
+			// Component Comparison
+			"all", "any", "greaterThan", "greaterThanEqual", "lessThan", "lessThanEqual", "not",
+
+			// Geometry Shader
+			"EmitStreamVertex", "EmitVertex", "EndPrimitive", "EndStreamPrimitive",
+
+			// Texture Sampling
+			"interpolateAtCentroid", "interpolateAtOffset", "interpolateAtSample", "texelFetch", "texelFetchOffset",
+			"texture", "textureGather", "textureGatherOffset", "textureGatherOffsets", "textureGrad",
+			"textureGradOffset", "textureLod", "textureLodOffset", "textureOffset", "textureProj",
+			"textureProjGrad", "textureProjGradOffset", "textureProjLod", "textureProjLodOffset", "textureProjOffset",
+			"textureQueryLevels", "textureQueryLod", "textureSamples", "textureSize",
+
+			// Matrix
+			"determinant", "inverse", "matrixCompMult", "outerProduct", "transpose",
+
+			// Integer
+			"bitCount", "bitfieldExtract", "bitfieldInsert", "bitfieldReverse", "findLSB",
+			"findMSB", "uaddCarry", "umulExtended", "usubBorrow",
+
+			// Image
+			"imageAtomicAdd", "imageAtomicAnd", "imageAtomicCompSwap", "imageAtomicExchange", "imageAtomicMax",
+			"imageAtomicMin", "imageAtomicOr", "imageAtomicXor", "imageLoad", "imageSamples",
+			"imageSize", "imageStore",
+
+			// Atomic
+			"atomicAdd", "atomicAnd", "atomicCompSwap", "atomicCounter", "atomicCounterDecrement",
+			"atomicCounterIncrement", "atomicExchange", "atomicMax", "atomicMin", "atomicOr",
+			"atomicXor",
+
+			// Memory Barrier
+			"barrier", "groupMemoryBarrier", "memoryBarrier", "memoryBarrierAtomicCounter", "memoryBarrierBuffer",
+			"memoryBarrierImage", "memoryBarrierShared",
 		};
 		for (auto& k : identifiers)
 		{
