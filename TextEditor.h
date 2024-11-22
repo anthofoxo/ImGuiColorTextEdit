@@ -21,6 +21,36 @@
 
 namespace ImGuiColorTextEdit {
 
+// ------------- Generic utils ------------- //
+
+constexpr ImVec4 U32ColorToVec4(ImU32 in)
+{
+	float s = 1.0f / 255.0f;
+	return ImVec4(
+		((in >> IM_COL32_A_SHIFT) & 0xFF) * s,
+		((in >> IM_COL32_B_SHIFT) & 0xFF) * s,
+		((in >> IM_COL32_G_SHIFT) & 0xFF) * s,
+		((in >> IM_COL32_R_SHIFT) & 0xFF) * s);
+}
+
+constexpr bool IsUTFSequence(char c)
+{
+	return (c & 0xC0) == 0x80;
+}
+
+inline float Distance(const ImVec2& a, const ImVec2& b)
+{
+	float x = a.x - b.x;
+	float y = a.y - b.y;
+	return sqrt(x * x + y * y); // sqrt is not constexpr
+}
+
+template<typename T>
+constexpr T Max(T a, T b) { return a > b ? a : b; }
+
+template<typename T>
+constexpr T Min(T a, T b) { return a < b ? a : b; }
+
 class IMGUI_API TextEditor
 {
 public:
@@ -107,32 +137,6 @@ public:
 	void UnitTests();
 
 private:
-	// ------------- Generic utils ------------- //
-
-	static inline ImVec4 U32ColorToVec4(ImU32 in)
-	{
-		float s = 1.0f / 255.0f;
-		return ImVec4(
-			((in >> IM_COL32_A_SHIFT) & 0xFF) * s,
-			((in >> IM_COL32_B_SHIFT) & 0xFF) * s,
-			((in >> IM_COL32_G_SHIFT) & 0xFF) * s,
-			((in >> IM_COL32_R_SHIFT) & 0xFF) * s);
-	}
-	static inline bool IsUTFSequence(char c)
-	{
-		return (c & 0xC0) == 0x80;
-	}
-	static inline float Distance(const ImVec2& a, const ImVec2& b)
-	{
-		float x = a.x - b.x;
-		float y = a.y - b.y;
-		return sqrt(x * x + y * y);
-	}
-	template<typename T>
-	static inline T Max(T a, T b) { return a > b ? a : b; }
-	template<typename T>
-	static inline T Min(T a, T b) { return a < b ? a : b; }
-
 	// ------------- Internal ------------- //
 
 	enum class PaletteIndex
