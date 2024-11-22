@@ -1,5 +1,7 @@
 #include "TextEditor.h"
 
+namespace ImGuiColorTextEdit {
+
 void TextEditor::UnitTests()
 {
 	SetText(" \t  \t   \t \t\n");
@@ -187,3 +189,5 @@ void TextEditor::UnitTests()
 		assert(!FindNextOccurrence("lalal", 4, { 3, 5 }, outStart, outEnd)); // not found
 	}
 }
+
+} // namespace ImGuiColorTextEdit

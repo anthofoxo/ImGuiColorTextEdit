@@ -19,6 +19,8 @@
 #endif
 #include "imgui.h"
 
+namespace ImGuiColorTextEdit {
+
 class IMGUI_API TextEditor
 {
 public:
@@ -60,7 +62,7 @@ public:
 	void SetTabSize(int aValue);
 	inline int GetTabSize() const { return mTabSize; }
 	void SetLineSpacing(float aValue);
-	inline float GetLineSpacing() const { return mLineSpacing;  }
+	inline float GetLineSpacing() const { return mLineSpacing; }
 
 	inline static void SetDefaultPalette(PaletteId aValue) { defaultPalette = aValue; }
 	inline static PaletteId GetDefaultPalette() { return defaultPalette; }
@@ -476,3 +478,5 @@ private:
 	static const std::unordered_map<char, char> CLOSE_TO_OPEN_CHAR;
 	static PaletteId defaultPalette;
 };
+
+} // namespace ImGuiColorTextEdit

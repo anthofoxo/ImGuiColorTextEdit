@@ -1,5 +1,7 @@
 #include "TextEditor.h"
 
+namespace ImGuiColorTextEdit {
+
 void TextEditor::ImGuiDebugPanel(const std::string& panelName)
 {
 	ImGui::Begin(panelName.c_str());
@@ -51,3 +53,5 @@ void TextEditor::ImGuiDebugPanel(const std::string& panelName)
 	}
 	ImGui::End();
 }
+
+} // namespace ImGuiColorTextEdit
