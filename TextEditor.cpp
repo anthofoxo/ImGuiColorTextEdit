@@ -92,7 +92,7 @@ void TextEditor::SetLanguageDefinition(LanguageDefinitionId aValue)
 
 	mRegexList.clear();
 	for (const auto& r : mLanguageDefinition->mTokenRegexStrings)
-		mRegexList.push_back(std::make_pair(boost::regex(r.first, boost::regex_constants::optimize), r.second));
+		mRegexList.push_back(std::make_pair(TEXTEDIT_REGEX_NAMESPACE::regex(r.first, TEXTEDIT_REGEX_NAMESPACE::regex_constants::optimize), r.second));
 
 	Colorize();
 }
@@ -2587,7 +2587,7 @@ void TextEditor::ColorizeRange(int aFromLine, int aToLine)
 		return;
 
 	std::string buffer;
-	boost::cmatch results;
+	TEXTEDIT_REGEX_NAMESPACE::cmatch results;
 	std::string id;
 
 	int endLine = std::max(0, std::min((int)mLines.size(), aToLine));
@@ -2633,7 +2633,7 @@ void TextEditor::ColorizeRange(int aFromLine, int aToLine)
 				for (const auto& p : mRegexList)
 				{
 					bool regexSearchResult = false;
-					try { regexSearchResult = boost::regex_search(first, last, results, p.first, boost::regex_constants::match_continuous); }
+					try { regexSearchResult = TEXTEDIT_REGEX_NAMESPACE::regex_search(first, last, results, p.first, TEXTEDIT_REGEX_NAMESPACE::regex_constants::match_continuous); }
 					catch (...) {}
 					if (regexSearchResult)
 					{

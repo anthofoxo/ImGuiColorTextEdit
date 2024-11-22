@@ -10,7 +10,13 @@
 #include <unordered_set>
 #include <unordered_map>
 #include <map>
-#include <boost/regex.hpp>
+#if defined(__has_include) && __has_include(<boost/regex.hpp>)
+#	define TEXTEDIT_REGEX_NAMESPACE boost
+#	include <boost/regex.hpp>
+#else
+#	define TEXTEDIT_REGEX_NAMESPACE std
+#	include <regex>
+#endif
 #include "imgui.h"
 
 class IMGUI_API TextEditor
@@ -304,7 +310,7 @@ private:
 		UndoOperationType mType;
 	};
 
-	typedef std::vector<std::pair<boost::regex, PaletteIndex>> RegexList;
+	typedef std::vector<std::pair<TEXTEDIT_REGEX_NAMESPACE::regex, PaletteIndex>> RegexList;
 
 	class UndoRecord
 	{
