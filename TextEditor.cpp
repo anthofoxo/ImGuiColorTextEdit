@@ -20,10 +20,6 @@ TextEditor::TextEditor()
 	mLines.push_back(Line());
 }
 
-TextEditor::~TextEditor()
-{
-}
-
 void TextEditor::SetPalette(PaletteId aValue)
 {
 	mPaletteId = aValue;

@@ -27,7 +27,6 @@ public:
 	// ------------- Exposed API ------------- //
 
 	TextEditor();
-	~TextEditor();
 
 	enum class PaletteId
 	{
