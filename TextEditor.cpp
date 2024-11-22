@@ -100,16 +100,6 @@ const char* TextEditor::GetLanguageDefinitionName() const
 	return mLanguageDefinition != nullptr ? mLanguageDefinition->mName.c_str() : "None";
 }
 
-void TextEditor::SetTabSize(int aValue)
-{
-	mTabSize = Max(1, Min(8, aValue));
-}
-
-void TextEditor::SetLineSpacing(float aValue)
-{
-	mLineSpacing = Max(1.0f, Min(2.0f, aValue));
-}
-
 void TextEditor::SelectAll()
 {
 	ClearSelections();

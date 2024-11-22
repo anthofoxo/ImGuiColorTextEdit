@@ -54,8 +54,6 @@ constexpr T Min(T a, T b) { return a < b ? a : b; }
 class IMGUI_API TextEditor
 {
 public:
-	// ------------- Exposed API ------------- //
-
 	TextEditor();
 
 	enum class PaletteId
@@ -71,27 +69,12 @@ public:
 		FirstVisibleLine, Centered, LastVisibleLine
 	};
 
-	inline void SetReadOnlyEnabled(bool aValue) { mReadOnly = aValue; }
-	inline bool IsReadOnlyEnabled() const { return mReadOnly; }
-	inline void SetAutoIndentEnabled(bool aValue) { mAutoIndent = aValue; }
-	inline bool IsAutoIndentEnabled() const { return mAutoIndent; }
-	inline void SetShowWhitespacesEnabled(bool aValue) { mShowWhitespaces = aValue; }
-	inline bool IsShowWhitespacesEnabled() const { return mShowWhitespaces; }
-	inline void SetShowLineNumbersEnabled(bool aValue) { mShowLineNumbers = aValue; }
-	inline bool IsShowLineNumbersEnabled() const { return mShowLineNumbers; }
-	inline void SetShortTabsEnabled(bool aValue) { mShortTabs = aValue; }
-	inline bool IsShortTabsEnabled() const { return mShortTabs; }
 	inline int GetLineCount() const { return mLines.size(); }
-	inline bool IsOverwriteEnabled() const { return mOverwrite; }
 	void SetPalette(PaletteId aValue);
 	PaletteId GetPalette() const { return mPaletteId; }
 	void SetLanguageDefinition(LanguageDefinitionId aValue);
 	LanguageDefinitionId GetLanguageDefinition() const { return mLanguageDefinitionId; };
 	const char* GetLanguageDefinitionName() const;
-	void SetTabSize(int aValue);
-	inline int GetTabSize() const { return mTabSize; }
-	void SetLineSpacing(float aValue);
-	inline float GetLineSpacing() const { return mLineSpacing; }
 
 	inline static void SetDefaultPalette(PaletteId aValue) { defaultPalette = aValue; }
 	inline static PaletteId GetDefaultPalette() { return defaultPalette; }
@@ -136,9 +119,17 @@ public:
 	void ImGuiDebugPanel(const std::string& panelName = "Debug");
 	void UnitTests();
 
-private:
-	// ------------- Internal ------------- //
+public:
+	int mTabSize = 4; // Recommended range 1 -> 8
+	float mLineSpacing = 1.0f; // Recommended range 1.0 -> 2.0
+	bool mOverwrite = false;
+	bool mReadOnly = false;
+	bool mAutoIndent = true;
+	bool mShowWhitespaces = true;
+	bool mShowLineNumbers = true;
+	bool mShortTabs = false;
 
+private:
 	enum class PaletteIndex
 	{
 		Default,
@@ -420,15 +411,6 @@ private:
 	EditorState mState;
 	std::vector<UndoRecord> mUndoBuffer;
 	int mUndoIndex = 0;
-
-	int mTabSize = 4;
-	float mLineSpacing = 1.0f;
-	bool mOverwrite = false;
-	bool mReadOnly = false;
-	bool mAutoIndent = true;
-	bool mShowWhitespaces = true;
-	bool mShowLineNumbers = true;
-	bool mShortTabs = false;
 
 	int mSetViewAtLine = -1;
 	SetViewAtLineMode mSetViewAtLineMode;
