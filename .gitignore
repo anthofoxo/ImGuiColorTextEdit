@@ -34,3 +34,8 @@ TextEditor.cpp.bak
 *.bak
 Save/TextEditor.h
 Save/TextEditor.cpp
+
+# Visual Studio
+*.vcxproj
+*.vcxproj.user
+*.vcxproj.user.filters
